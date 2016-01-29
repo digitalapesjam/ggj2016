@@ -4,11 +4,12 @@ export default class System {
   }
 
   update(game) {
+    let that = this;
     this.layers.forEach(layer => {
       if (!!layer) {
         for (var k in layer) {
           if (layer.hasOwnProperty(k)) {
-            layer[k].update(game);
+            layer[k].update(game, that);
           }
         }
         // Object.values(layer).forEach(entity => {
