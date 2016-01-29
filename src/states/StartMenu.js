@@ -1,4 +1,5 @@
 import RainbowText from 'objects/RainbowText';
+import {GameState} from 'constants/states';
 
 class StartMenu extends Phaser.State {
 
@@ -9,7 +10,7 @@ class StartMenu extends Phaser.State {
     this.game.stage.addChild(text1);
     // let text = new RainbowText(this.game, center.x, center.y, "Start Menu");
     text1.anchor.set(0.5);
-    this.game.state.start('GameState');
+    this.game.state.start(GameState);
     text1.destroy();
   }
 }
