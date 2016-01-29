@@ -1,5 +1,5 @@
 import RainbowText from 'objects/RainbowText';
-import System from '../util/System';
+import {System, CollisionChecker} from '../util';
 
 class GameState extends Phaser.State {
 
@@ -10,13 +10,15 @@ class GameState extends Phaser.State {
 		this.ecsystem = new System(this.game);
 		this.ecsystem.register(0, 'rainbow', {
 			update: () => {
-				console.log('updated!');
+				//console.log('updated!');
 			}
-		})
+		});
+		this.collisions = new CollisionChecker(this.game);
 	}
 
 	update() {
 		this.ecsystem.update();
+		this.collisions.checkCollisions();
 	}
 
 }
