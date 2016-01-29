@@ -1,3 +1,5 @@
+
+
 class RainbowText extends Phaser.Text {
 
 	constructor(game, x, y, text) {
@@ -14,7 +16,7 @@ class RainbowText extends Phaser.Text {
 		this.game.stage.addChild(this);
 
 	}
-	
+
 	startTimer() {
 		this.game.time.events.loop(this._speed, this.colorize, this).timer.start();
 	}
