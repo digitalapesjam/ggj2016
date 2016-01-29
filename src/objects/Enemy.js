@@ -5,7 +5,7 @@ export default class Enemy {
         this.y = y;
         this.life = 1;
         this.armor = 1;
-        this.speed = 1;
+        this.agility = 1;
       }
 
       update(game,system) {
@@ -19,14 +19,16 @@ export default class Enemy {
       }
 
       walk(speed){
-        this.x += this.speed*speed;
-        if (!!this.animation)
-          animation.walk(speed);
+        this.x += speed*this.agility;
+        if (!!this.animation) {
+          this.animation.walk(speed*this.agility);
+          this.animation.sprite.x = this.x;
+        }
       }
 
       attack(){
         if (!!this.animation)
-          animation.attack();
+          this.animation.attack();
       }
 
       damege(amount){
