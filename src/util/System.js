@@ -1,6 +1,10 @@
 export default class System {
-  constructor() {
+  constructor(game) {
     this.entities = {};
+    this.colliders = [];
+    this.collidersEntity = {};
+    this.game = game;
+    game.physics.startSystem(Phaser.Physics.ARCADE);
   }
 
   update(game) {
@@ -21,6 +25,12 @@ export default class System {
       entity.crate();
     }
     this.entities[id] = entity;
+
+    if (!!entity.animation){
+      this.game.physics.arcade.enable(entity.animation.sprite);
+      this.colliders.push(entity.animation.sprite);
+      this.collidersEntity[entity.animation.sprite] = entity;
+    }
   }
 
   remove(id) {
@@ -29,5 +39,9 @@ export default class System {
 
   get(id) {
     return this.entities[id];
+  }
+
+  getCollidersEntity(sprite){
+    return this.collidersEntity[sprite];
   }
 }

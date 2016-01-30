@@ -10,26 +10,40 @@ export default class Character {
         this.isAttacking = false;
       }
 
+      isWalking(){
+        return this.animation.sprite.body.velocity.x != 0;
+      }
+
       isAlive(){
         return this.life > 0;
       }
 
       update(game,system) {
+          if (!!this.animation){
+            //console.log(this.name);
+            game.physics.arcade.overlap(this.animation.sprite,system.colliders,(spriteA,spriteB)=>{
+                  if (spriteB != spriteA && !!this.behaviour)
+                      this.behaviour.trigger(this,system.getCollidersEntity(spriteB));
+                  return true;
+            },null,this);
+          }
+
           if (!!this.behaviour && this.isAlive())
             this.behaviour.update(this,game,system);
       }
 
       stop() {
-        if (!!this.animation)
+        if (!!this.animation){
             this.animation.stop();
+        }
       }
 
       walk(speed){
         if (this.isAlive() && !this.isAttacking) {
           this.x += speed*this.agility;
           if (!!this.animation) {
+            this.animation.sprite.x=this.x;
             this.animation.walk(speed*this.agility);
-            this.animation.sprite.x = this.x;
           }
         }
       }

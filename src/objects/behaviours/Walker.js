@@ -1,3 +1,5 @@
+import Mummy from 'objects/Mummy';
+
 export default class Walker {
   constructor(starttingPosition, range){
     this.starttingPosition = starttingPosition;
@@ -6,18 +8,28 @@ export default class Walker {
     this.cooldown = false;
   }
 
-  update(enemy,game,system){
-      if (Math.abs(enemy.x - this.starttingPosition) > this.range/2){
+  update(character,game,system){
+      if (Math.abs(character.x - this.starttingPosition) > this.range/2){
           this.walkdirection *= -1;
       }
-      if (Math.abs(enemy.x - this.starttingPosition) == this.range/4 && !this.cooldown){
-          enemy.attack();
-          this.cooldown = true;
-          let that=this;
-          setTimeout(function () {
-            that.cooldown = false;
-          }, 100);
-      }
-      enemy.walk(this.walkdirection);
+      character.walk(this.walkdirection);
+  }
+
+  trigger(character,other){
+    if (other.__proto__ == character.__proto__){
+      this.walkdirection *= -1
+      character.walk(this.walkdirection);
+
+    } else {
+      if (!character.isAttacking)
+        character.stop();
+
+        character.attack();
+        this.cooldown = true;
+        let that=this;
+        setTimeout(function () {
+          that.cooldown = false;
+        }, 100);
+    }
   }
 }

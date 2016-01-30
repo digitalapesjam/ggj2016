@@ -12,8 +12,11 @@ class TestLevel extends Phaser.State {
 	create() {
     this.ecsystem = new System(this.game);
 		let center = { x: this.game.world.centerX, y: this.game.world.centerY }
-		let zombie = new Mummy(this.game, center.x, center.y);
+    let zombie = new Mummy(this.game, center.x+100, center.y);
+    zombie.behaviour = null;
+    let player = new Mummy(this.game, center.x, center.y);
     this.ecsystem.register('mrZombie',zombie);
+    this.ecsystem.register('mrPlayer',player);
 	}
 
 
