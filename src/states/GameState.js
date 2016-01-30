@@ -8,7 +8,7 @@ class GameState extends Phaser.State {
 		let text = new RainbowText(this.game, center.x, center.y, "- phaser -\nwith a sprinkle of\nES6 dust");
 		text.anchor.set(0.5);
 		this.ecsystem = new System(this.game);
-		this.ecsystem.register(0, 'rainbow', {
+		this.ecsystem.register('rainbow', {
 			update: () => {
 				//console.log('updated!');
 			}
@@ -17,8 +17,8 @@ class GameState extends Phaser.State {
 	}
 
 	update() {
-		this.ecsystem.update();
-		this.collisions.checkCollisions();
+		this.ecsystem.update(this.game);
+		this.collisions.checkCollisions(this.ecsystem);
 	}
 
 }
