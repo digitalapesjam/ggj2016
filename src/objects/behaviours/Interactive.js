@@ -7,19 +7,12 @@ export default class Interactive {
   }
 
   update(entity,game,system){
-      if(this.cursors.left.isDown) {
-        this.walkdirection = -1;
-        entity.walk(this.walkdirection);
-      }else if(this.cursors.right.isDown) {
-        this.walkdirection = 1;
-        entity.walk(this.walkdirection);
-      }
-
-
-      // if (Math.abs(enemy.x - this.starttingPosition) > this.range/2){
-      //     this.walkdirection *= -1;
-      //     enemy.damage(enemy.life);
-      // }
-      // enemy.walk(this.walkdirection);
+    if(this.cursors.left.isDown) {
+      this.walkdirection = -1;
+      entity.walk(this.walkdirection);
+    }else if(this.cursors.right.isDown) {
+      this.walkdirection = 1;
+      entity.walk(this.walkdirection);
+    }
   }
 }
