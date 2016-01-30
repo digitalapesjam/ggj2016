@@ -19,8 +19,10 @@ export default class Player extends Phaser.Sprite {
     this.animations.add('turn', [4], 20, true);
     this.animations.add('attack', [5, 6, 7, 8], 10, false);
     this.animations.add('seppucku', [0], 20, false);
-    this.animations.add('right', [5, 6, 7, 8], 10, true);
-    this.animations.add('left', [0, 1, 2, 3], 10, true);
+    this.animations.add('right', [10, 11,12,13,14,15,16], 10, true);
+    this.animations.add('left', [3,4,5,6,7,8,9], 10, true);
+    this.animations.add('stop_left', [3], 5, true);
+    this.animations.add('stop_right', [16], 5, true);
 
 
 
@@ -98,15 +100,17 @@ export default class Player extends Phaser.Sprite {
     {
       if (this.facing != 'idle')
       {
-        this.animations.stop();
+        // this.animations.stop();
 
         if (this.facing == 'left')
         {
-          this.frame = 0;
+          this.animations.play('stop_left');
+          // this.frame = 0;
         }
         else
         {
-          this.frame = 5;
+          this.animations.play('stop_right');
+          // this.frame = 5;
         }
 
         this.facing = 'idle';
