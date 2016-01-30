@@ -22,7 +22,7 @@ export default class System {
 
   register(id, entity) {
     if (entity.create) {
-      entity.crate();
+      entity.create();
     }
     this.entities[id] = entity;
 
