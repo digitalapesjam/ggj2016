@@ -1,17 +1,15 @@
 export default class Walker {
-  constructor(){
+  constructor(starttingPosition, range){
+    this.starttingPosition = starttingPosition;
+    this.range = range;
     this.walkdirection = 1;
   }
 
   update(enemy,game,system){
-      if (!!this.start){
-          if (game.time.time - this.start > 8000){
-            this.walkdirection *= -1;
-            this.start = game.time.time;
-          }
-          enemy.walk(this.walkdirection);
-      } else {
-        this.start =game.time.time;
+      if (Math.abs(enemy.x - this.starttingPosition) > this.range/2){
+          this.walkdirection *= -1;
+          enemy.damage(enemy.life);
       }
+      enemy.walk(this.walkdirection);
   }
 }

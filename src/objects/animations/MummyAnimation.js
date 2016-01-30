@@ -20,13 +20,22 @@ class MummyAnimation {
       if (speed < 0) //going left
         this.sprite.scale.x = -this.scale;
 
-      if (speed != this.currentspeed)
+      if (speed != this.currentspeed || this.sprite.animations.currentAnim.name != 'walk'){
         this.sprite.animations.play('walk', Math.abs(speed)*20, true);
+      }
 
       this.currentspeed = speed;
     }
 
     attack(){
+
+    }
+
+    die() {
+
+    }
+
+    jump(){
 
     }
 }
