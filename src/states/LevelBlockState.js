@@ -5,7 +5,8 @@ import PressureDoor from 'objects/PressureDoor';
 class GameState extends Phaser.State {
 
   preload() {
-    this.load.spritesheet(DoorAnimation.label, DoorAnimation.path, 37, 45, 18);
+    this.load.spritesheet(DoorAnimation.label, DoorAnimation.path, 70, 70);
+    this.load.image('sensor', 'assets/sprites/sensor.png');
   }
 
 	create() {
@@ -15,7 +16,7 @@ class GameState extends Phaser.State {
 		this.ecsystem = new System(this.game);
 		this.collisions = new CollisionChecker(this.game);
 
-    const sensorSpr = this.game.add.sprite(center.x - 50, center.y, DoorAnimation.label);
+    const sensorSpr = this.game.add.sprite(center.x - 50, center.y, 'sensor');
     // add targe sprite
     const someSpr = this.game.add.sprite(0, 0, DoorAnimation.label);
     this.ecsystem.register('hero', {
