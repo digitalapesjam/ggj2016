@@ -10,8 +10,9 @@ export default class Walker {
 
   update(character,game,system){
       if (Math.abs(character.x - this.starttingPosition) > this.range/2){
+          character.stop();
           this.walkdirection *= -1;
-      }
+        }
       character.walk(this.walkdirection);
   }
 

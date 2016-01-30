@@ -1,8 +1,9 @@
 import Mummy from 'objects/Mummy';
 import Player from 'objects/Player';
+import System from '../util/System';
 import MummyAnimation from 'objects/animations/MummyAnimation';
 import PlayerAnimation from 'objects/animations/PlayerAnimation';
-import System from '../util/System';
+
 
 class TestLevel extends Phaser.State {
 
@@ -19,7 +20,6 @@ class TestLevel extends Phaser.State {
     this.ecsystem.register('mrZombie',zombie);
     this.ecsystem.register('mrPlayer',player);
 	}
-
 
   update() {
 		this.ecsystem.update(this.game);
