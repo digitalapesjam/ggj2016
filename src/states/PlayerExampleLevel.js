@@ -1,28 +1,25 @@
+import Player from 'objects/Player';
+import Walker from 'objects/behaviours/Walker';
+import MummyAnimation from 'objects/animations/MummyAnimation';
+import System from '../util/System';
 
-class PlayerExampleLevel extends Phaser.State {
+class TestLevel extends Phaser.State {
 
-  preload() {
-    this.game.load.spritesheet('player', 'assets/samurai1.png', 52,86 ,18  );
+  preload(){
+    this.load.spritesheet(MummyAnimation.label, MummyAnimation.path, 37, 45, 18);
   }
 
-  create() {
-    let center = { x: this.game.world.centerX, y: this.game.world.centerY }
-    let player = new Phaser.Sprite(this.game, center.x, center.y,  'player',1);
-    this.player = player;
-    player.animations.add('walk', [1, 2,3,4,5,6]);
-    // player.animations.play('walk', 10, true);
+	create() {
+    this.ecsystem = new System(this.game);
+		let center = { x: this.game.world.centerX, y: this.game.world.centerY }
+		let player = new Player(this.game, center.x, center.y);
+    this.ecsystem.register('player1',player);
+	}
 
-    this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-
-    this.game.stage.addChild(player);
-    player.anchor.set(0.5);
-  }
 
   update() {
-    if(this.upKey.isDown) {
-      this.player.animations.play('walk', 10, true);
-    }
-  }
+		this.ecsystem.update(this.game);
+	}
 }
 
-export default PlayerExampleLevel;
+export default TestLevel;
