@@ -11,7 +11,7 @@ export default class Stalker extends Phaser.Sprite {
     this.startingPosition = x;
     this.range = 200;
     this.justTurned = false;
-    this.anchor.setTo(.5, 1);
+    this.anchor.setTo(.5, 0);
     this.agility = 5;
     this.state = 'idle';
 
@@ -23,7 +23,7 @@ export default class Stalker extends Phaser.Sprite {
 
   update(state){
     if (state){
-        if (Math.abs(state.gameObjects.player.x - this.x) < this.range &&  Math.abs(state.gameObjects.player.y - this.y) < 60){ //in range and same vertical position
+        if (Math.abs(state.gameObjects.player.x - this.x) < this.range &&  Math.abs(state.gameObjects.player.y - this.y) < 20){ //in range and same vertical position
           this.direction = (state.gameObjects.player.x - this.x)/
                           Math.abs(state.gameObjects.player.x - this.x);
           this.state = 'following';
@@ -32,7 +32,7 @@ export default class Stalker extends Phaser.Sprite {
         }
 
         this.game.physics.arcade.collide(this,state.gameObjects.player,(spriteA,spriteB)=>{
-          if (Math.abs(state.gameObjects.player.y - this.y) < 60)//same vertical position
+          if (Math.abs(state.gameObjects.player.y - this.y) < 20)//same vertical position
             this.state = 'attacking';
         },null,this);
     }
