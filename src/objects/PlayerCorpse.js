@@ -9,7 +9,7 @@ export default class PlayerCorpse extends Phaser.Sprite {
 
     this.body.bounce.y = 0.2;
     this.body.collideWorldBounds = true;
-    this.body.setSize(20, 32, 5, 16);
+    this.body.setSize(42, 50, 5, 16);
 
 
 
