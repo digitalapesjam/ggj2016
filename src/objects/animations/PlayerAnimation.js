@@ -18,9 +18,10 @@ class PlayerAnimation {
       this.sprite.scale.set(scale);
       this.sprite.smoothed = false;
       this.sprite.anchor.setTo(.5, 1);
-      this.currentspeed = 0;26
+      this.currentspeed = 0;
       game.physics.arcade.enable(this.sprite);
       this.isAttacking = false;
+      this.currentspeed = 0;
     }
 
     stop(){

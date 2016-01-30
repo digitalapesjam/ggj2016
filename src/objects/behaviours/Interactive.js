@@ -22,7 +22,7 @@ export default class Interactive {
       entity.stop()
     }
   }
-
+  
   trigger(character,other){
 
   }
