@@ -42,19 +42,19 @@ class TestLevel extends Phaser.State {
     this.ecsystem.register('level', level);
   }
 
-	create() {
-    this.game.physics.arcade.gravity.y = -1;
+  create() {
     this.ecsystem = new System(this.game);
-		let center = { x: this.game.world.centerX, y: this.game.world.centerY }
-		let player = new Player(this.game, center.x, center.y);
+    this.game.physics.arcade.gravity.y = 100;
+    let center = { x: this.game.world.centerX, y: this.game.world.centerY }
+    let player = new Player(this.game, center.x, center.y);
     this.ecsystem.register('player1',player);
     this.createLevel(player.animation.sprite);
-	}
+  }
 
 
   update() {
-		this.ecsystem.update(this.game);
-	}
+    this.ecsystem.update(this.game);
+  }
 }
 
 export default TestLevel;

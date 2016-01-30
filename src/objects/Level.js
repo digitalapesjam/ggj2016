@@ -31,19 +31,21 @@ export function preload(state) {
 }
 
 export class Level {
-  constructor(name, game, terrainConf, sensorDoorPositions, collisions, heroSprite) {
+  constructor(name, game, terrainConf, sensorDoorPositions, system, heroSprite) {
     console.log('making level', {name, terrainConf, sensorDoorPositions});
     this.name = name;
     this.terrainConf = terrainConf;
     this.sensorDoorPositions = sensorDoorPositions;
-    this.collisions = collisions;
+    this.system = system;
     this.heroSprite = heroSprite;
     this.game = game;
   }
 
   create() {
     const game = this.game;
+    const system = this.system;
     console.log('creating level', this.name);
+    let tId = 0;
     this.terrainConf.forEach(block => {
       console.log('making sprite for', block.type.label);
       const sprite = game.add.sprite(block.x, block.y, block.type.label);
@@ -51,13 +53,14 @@ export class Level {
       sprite.body.allowGravity = false;
       sprite.body.immovable = true;
       sprite.anchor.y = 1;
+      system.register(`terrain_${tId}`, {animation: {sprite}, update: () => {}});
+      tId++;
     });
     const sensorDisablers = [];
-    const collisions = this.collisions;
     const hero = this.heroSprite;
     let doorId = 0;
     this.sensorDoorPositions.forEach(pos => {
-      sensorDisablers.push(PressureDoor(`sensor_door_${doorId}`, game, collisions, hero, pos.sensor, pos.door));
+      sensorDisablers.push(PressureDoor(`sensor_door_${doorId}`, game, system, hero, pos.sensor, pos.door));
       doorId++;
     });
     this.sensorDisablers = sensorDisablers;
