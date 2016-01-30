@@ -53,12 +53,14 @@ class GameState extends Phaser.State {
     this.sensors = [];
     const sensors = this.sensors;
     const g = this.game;
+    const tileW = this.map.tileWidth;
+    const tileH = this.map.tileHeight;
     sensorsSpec.forEach(([[stx, sty], [dtx, dty]]) => {
 
-      const sensorSprite = game.add.sprite(stx * 16, sty * 16, 'sensor');
+      const sensorSprite = game.add.sprite(stx * tileW, sty * tileH, 'sensor');
       sensorSprite.anchor.y = 1;
 
-      const doorSprite = game.add.sprite(dtx * 16, dty * 16, 'door');
+      const doorSprite = game.add.sprite(dtx * tileW, dty * tileH, 'door');
       doorSprite.anchor.y = 1;
       doorSprite.animations.add('open', [1]);
       doorSprite.animations.add('close', [0]);
@@ -91,6 +93,7 @@ class GameState extends Phaser.State {
     });
 
     const sensors = this.sensors;
+    const deleteSensors = [];
     this.gameObjects.player.corpses.forEach((corpse) =>{ //corpses collisions
       game.physics.arcade.collide(corpse, that.layer);
       Object.keys(that.gameObjects).forEach((key) => {
@@ -102,10 +105,15 @@ class GameState extends Phaser.State {
           if (hit) {
             sensor.doorSprite.play('open');
             sensor.hit = true;
+            deleteSensors.push(sensor);
           }
         }
       });
     });
+    deleteSensors.forEach(s => {
+      const idx = sensors.indexOf(s);
+      sensors.splice(idx, 1);
+    })
 
     Object.keys(this.gameObjects).forEach((key)=>{
       game.physics.arcade.collide(that.gameObjects[key], that.layer);
