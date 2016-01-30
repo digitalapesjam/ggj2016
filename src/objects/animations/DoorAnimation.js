@@ -1,6 +1,7 @@
 export default class DoorAnimation {
   constructor(game, x, y) {
     this.sprite = game.add.sprite(x, y, DoorAnimation.label);
+    this.sprite.anchor.y = 1;
     this.sprite.animations.add('door_open', [0]);
     this.sprite.animations.add('door_close', [1]);
     this.close();
