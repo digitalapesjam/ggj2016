@@ -117,9 +117,10 @@ export default class Player extends Phaser.Sprite {
       }
     }
 
-    if (jumpButton.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer)
+    const almostGrounded = this.body.onFloor() || 0.2 > Math.abs(this.body.deltaY());
+    if (jumpButton.isDown && almostGrounded && this.game.time.now > this.jumpTimer)
     {
-      this.body.velocity.y = -250;
+      this.body.velocity.y = -150;
       this.jumpTimer = this.game.time.now + 750;
     }
   }
