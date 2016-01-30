@@ -32,7 +32,7 @@ class GameState extends Phaser.State {
     ];
 
     console.log('making level');
-    const level = new Level('lvl1', this.game, c.terrain(), doors, this.collisions, hero);
+    const level = new Level('lvl1', this.game, c.terrain(), doors, this.ecsystem, hero);
     this.ecsystem.register('level', level);
   }
 
@@ -41,7 +41,7 @@ class GameState extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		let center = { x: this.game.world.centerX, y: this.game.world.centerY }
 		this.ecsystem = new System(this.game);
-		this.collisions = new CollisionChecker(this.game);
+		//this.collisions = new CollisionChecker(this.game);
 
     // const sensorSpr = this.game.add.sprite(center.x - 50, center.y, 'sensor');
     // // add targe sprite
@@ -56,6 +56,7 @@ class GameState extends Phaser.State {
         // game.physics.arcade.moveToPointer(someSpr, 150);
         someSpr.x = game.input.activePointer.x;
         someSpr.y = game.input.activePointer.y;
+
         // if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
         //
         // }
@@ -71,9 +72,15 @@ class GameState extends Phaser.State {
     // );
 	}
 
+
 	update() {
 		this.ecsystem.update(this.game);
-		this.collisions.checkCollisions(this.ecsystem);
+		// this.collisions.checkCollisions(this.ecsystem);
+    // this.world.stage.children.forEach(s => {
+    //   console.log('debug', s);
+    //   game.debug.bodyInfo(s, 32, 32);
+    //   game.debug.body(s);
+    // })
 	}
 
 }

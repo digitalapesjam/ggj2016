@@ -1,7 +1,7 @@
 import Sensor from './Sensor';
 import DoorAnimation from 'objects/animations/DoorAnimation';
 
-export default (game, collisions, target, sensorPos, doorPos) => {
+export default (id, game, system, target, sensorPos, doorPos) => {
   const sensorSpr = game.add.sprite(sensorPos.x, sensorPos.y, 'sensor');
   game.physics.enable(sensorSpr);
   sensorSpr.anchor.y = 1;
@@ -10,7 +10,7 @@ export default (game, collisions, target, sensorPos, doorPos) => {
   const doorAnim = new DoorAnimation(game, doorPos.x, doorPos.y);
 
   let wasHit = false;
-  const collision = Sensor(game, collisions, sensorSpr, target, wasHit, (isHit) => {
+  const collision = Sensor(id, game, system, sensorSpr, target, wasHit, (isHit) => {
     if (isHit !== wasHit) {
       if (isHit) {
         doorAnim.open();
@@ -25,7 +25,7 @@ export default (game, collisions, target, sensorPos, doorPos) => {
   return () => {
     if (!removed) {
       if (wasHit) {
-        collisions.removeCollision(collision);
+        system.remove(collision);
         doorAnim.open();
         removed = true;
       }

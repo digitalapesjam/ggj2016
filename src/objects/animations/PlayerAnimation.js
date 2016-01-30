@@ -10,6 +10,7 @@ class PlayerAnimation {
     constructor(game,x,y,scale){
       this.scale = scale;
       this.sprite = game.add.sprite(x, y, PlayerAnimation.label,1);
+      game.physics.enable(this.sprite);
       this.sprite.animations.add(_animWalkId, [7,8,9,10,11]);
       this.sprite.animations.add(_animJumpId, [18,19]);
       this.sprite.animations.add(_animAttackId, [25,26,27,28, 32,33,34,1]);

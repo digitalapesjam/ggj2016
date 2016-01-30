@@ -55,8 +55,10 @@ export class Level {
     const sensorDisablers = [];
     const collisions = this.collisions;
     const hero = this.heroSprite;
+    let doorId = 0;
     this.sensorDoorPositions.forEach(pos => {
-      sensorDisablers.push(PressureDoor(game, collisions, hero, pos.sensor, pos.door));
+      sensorDisablers.push(PressureDoor(`sensor_door_${doorId}`, game, collisions, hero, pos.sensor, pos.door));
+      doorId++;
     });
     this.sensorDisablers = sensorDisablers;
   }
