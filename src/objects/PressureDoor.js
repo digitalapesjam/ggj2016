@@ -20,9 +20,11 @@ export default (game, collisions, target, sensorPos, doorPos) => {
   let removed = false;
   return () => {
     if (!removed) {
+      if (wasHit) {
         collisions.removeCollision(collision);
         doorAnim.open();
         removed = true;
+      }
     }
   }
 }
