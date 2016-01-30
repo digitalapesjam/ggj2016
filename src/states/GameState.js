@@ -35,7 +35,7 @@ class GameState extends Phaser.State {
 
     this.gameObjects = [];
     this.gameObjects['player'] = new Player(this.game,32,32);
-    // this.gameObjects['zombie'] = new Zombie(this.game,100,40);
+    this.gameObjects['zombie'] = new Zombie(this.game,100,40);
     this.game.camera.follow(this.gameObjects['player']);
 	}
 
