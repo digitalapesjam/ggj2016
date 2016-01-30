@@ -48,6 +48,8 @@ export class Level {
       console.log('making sprite for', block.type.label);
       const sprite = game.add.sprite(block.x, block.y, block.type.label);
       game.physics.arcade.enable(sprite);
+      sprite.body.allowGravity = false;
+      sprite.body.immovable = true;
       sprite.anchor.y = 1;
     });
     const sensorDisablers = [];

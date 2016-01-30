@@ -26,7 +26,7 @@ class GameState extends Phaser.State {
 
     const doors = [
       {
-        sensor: {x: 100, y: wHgt},
+        sensor: {x: 100, y: wHgt - 50},
         door: {x: 400, y: wHgt},
       },
     ];
@@ -46,10 +46,14 @@ class GameState extends Phaser.State {
     // const sensorSpr = this.game.add.sprite(center.x - 50, center.y, 'sensor');
     // // add targe sprite
     const someSpr = this.game.add.sprite(0, 0, DoorAnimation.label);
+    game.physics.enable(someSpr);
+    someSpr.allowGravity = false;
+    someSpr.anchor.x = someSpr.anchor.y = 0.5;
     this.createLevel(someSpr);
     // let deleteDoor = null;
     this.ecsystem.register('hero', {
       update: () => {
+        // game.physics.arcade.moveToPointer(someSpr, 150);
         someSpr.x = game.input.activePointer.x;
         someSpr.y = game.input.activePointer.y;
         // if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
