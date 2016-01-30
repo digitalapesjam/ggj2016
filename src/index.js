@@ -4,7 +4,7 @@ import {GameState,StartMenu,EnemyTestLevel,PlayerExampleLevel} from './states';
 class Game extends Phaser.Game {
 
   constructor() {
-    super(500, 500, Phaser.AUTO, 'content', null);
+    super(800, 500, Phaser.AUTO, 'content', null);
     this.state.add(states.StartMenu, StartMenu, false);
     this.state.add(states.GameState, GameState, false);
     this.state.add(states.EnemyTestLevel, EnemyTestLevel, false);
