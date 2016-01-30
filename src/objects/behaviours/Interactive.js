@@ -7,16 +7,24 @@ export default class Interactive {
   }
 
   update(entity,game,system){
+
     if(this.cursors.left.isDown) {
       this.walkdirection = -1;
       entity.walk(this.walkdirection);
     }else if(this.cursors.right.isDown) {
       this.walkdirection = 1;
       entity.walk(this.walkdirection);
+    }else if(this.cursors.down.isDown){
+      entity.attack();
+      console.log('down ',entity);
+      // entity.stop()
+    }else{
+      entity.stop()
     }
   }
 
   trigger(character,other){
 
   }
+
 }
