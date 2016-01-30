@@ -9,7 +9,7 @@ class PlayerAnimation {
     constructor(game,x,y,scale){
       this.scale = scale;
       this.sprite = game.add.sprite(x, y, PlayerAnimation.label,1);
-      this.sprite.animations.add(_animWalkId, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+      this.sprite.animations.add(_animWalkId, [7,8,9,10,11]);
       this.sprite.scale.set(scale);
       this.sprite.smoothed = false;
       this.sprite.anchor.setTo(.5, 1);
