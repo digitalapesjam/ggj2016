@@ -48,6 +48,7 @@ class GameState extends Phaser.State {
     });
     this.gameObjects['player'].corpses.forEach((corpse) =>{
       game.physics.arcade.collide(corpse, that.layer);
+      game.physics.arcade.collide(corpse, that.player);
     })
   }
 

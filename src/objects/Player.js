@@ -7,7 +7,10 @@ export default class Player extends Phaser.Sprite {
     this.game = game;
     game.add.existing(this);
     game.physics.enable(this, Phaser.Physics.ARCADE);
-
+    this.initialPosition = {
+      x:x,
+      y:y
+    }
     this.body.bounce.y = 0.2;
     this.body.collideWorldBounds = true;
     this.body.setSize(20, 32, 5, 16);
@@ -15,7 +18,7 @@ export default class Player extends Phaser.Sprite {
 
     this.animations.add('turn', [4], 20, true);
     this.animations.add('attack', [5, 6, 7, 8], 10, false);
-    this.animations.add('seppucku', [0], 10, true);
+    this.animations.add('seppucku', [0], 20, false);
     this.animations.add('right', [5, 6, 7, 8], 10, true);
     this.animations.add('left', [0, 1, 2, 3], 10, true);
 
@@ -38,16 +41,21 @@ export default class Player extends Phaser.Sprite {
     const cursors = this.cursors;
     const jumpButton = this.jumpButton;
 
+    if(this.animations.currentAnim.name === 'seppucku' && this.animations.currentAnim.isPlaying ) {
+      return ;
+    }
+
     if(this.seppuckuButton.isDown){
       console.log('seppucku!!')
       this.body.velocity.x = 0
       console.log('this.body ',this.body);
       this.animations.play('seppucku');
 
-      // super(game,x,y,resource);
-      // this.corpses.push(new PlayerCorpse(this.game,32,32,'dude'));
       const pos = this.body.position
       this.corpses.push(new PlayerCorpse(this.game,pos.x,pos.y-15,'dude'));
+
+      this.x = this.initialPosition.x;
+      this.y = this.initialPosition.y;
 
 
     }
