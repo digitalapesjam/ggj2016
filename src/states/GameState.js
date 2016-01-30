@@ -42,14 +42,15 @@ class GameState extends Phaser.State {
   update(){
     const game = this.game;
     const that = this;
+    this.gameObjects['player'].corpses.forEach((corpse) =>{
+      game.physics.arcade.collide(corpse, that.layer);
+      game.physics.arcade.collide(corpse, that.gameObjects.player);
+    })
     Object.keys(this.gameObjects).forEach((key)=>{
       game.physics.arcade.collide(that.gameObjects[key], that.layer);
       that.gameObjects[key].update(that);
     });
-    this.gameObjects['player'].corpses.forEach((corpse) =>{
-      game.physics.arcade.collide(corpse, that.layer);
-      game.physics.arcade.collide(corpse, that.player);
-    })
+
   }
 
 }
