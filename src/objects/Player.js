@@ -13,7 +13,7 @@ export default class Player extends Phaser.Sprite {
     }
     this.body.bounce.y = 0.2;
     this.body.collideWorldBounds = true;
-    this.body.setSize(20, 32, 5, 16);
+    this.body.setSize(42, 50, 5, 16);
 
 
     this.animations.add('turn', [4], 20, true);
@@ -57,7 +57,6 @@ export default class Player extends Phaser.Sprite {
         that.justSeppukued = false;
       }, 1000);
       this.body.velocity.x = 0
-      console.log('this.body ',this.body);
       this.animations.play('seppucku');
 
       const pos = this.body.position
