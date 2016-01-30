@@ -7,10 +7,11 @@ class GameState extends Phaser.State {
   preload(){
     this.game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles-1', 'assets/tiles-1.png');
+
     // this.game.load.image('min', 'assets/min.png');
     this.game.load.image('sensor', 'assets/sensor.png');
     this.game.load.spritesheet('door', 'assets/door.png', 16, 64);
-    this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    this.game.load.spritesheet('dude', 'assets/samurai.png', 42, 70);
     this.game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     this.game.load.image('starSmall', 'assets/star.png');
     this.game.load.image('starBig', 'assets/star2.png');
