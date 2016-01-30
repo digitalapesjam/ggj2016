@@ -16,8 +16,8 @@ class GameState extends Phaser.State {
 		this.ecsystem = new System(this.game);
 		this.collisions = new CollisionChecker(this.game);
 
-    const sensorSpr = this.game.add.sprite(center.x - 50, center.y, 'sensor');
-    // add targe sprite
+    // const sensorSpr = this.game.add.sprite(center.x - 50, center.y, 'sensor');
+    // // add targe sprite
     const someSpr = this.game.add.sprite(0, 0, DoorAnimation.label);
     this.ecsystem.register('hero', {
       update: () => {
@@ -25,15 +25,13 @@ class GameState extends Phaser.State {
         someSpr.y = game.input.activePointer.y;
       }
     });
-    const doorAnim = new DoorAnimation(this.game, center.x + 50, center.y);
+    // const doorAnim = new DoorAnimation(this.game, center.x + 50, center.y);
     PressureDoor(
-      this.game,
+      game,
       this.collisions,
-      sensorSpr,
       someSpr,
-      doorAnim,
-      doorAnim.open.bind(doorAnim),
-      doorAnim.close.bind(doorAnim)
+      {x: center.x - 50, y: center.y},
+      {x: center.x + 50, y: center.y}
     );
 	}
 

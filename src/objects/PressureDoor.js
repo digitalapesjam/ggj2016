@@ -1,13 +1,17 @@
 import Sensor from './Sensor';
+import DoorAnimation from 'objects/animations/DoorAnimation';
 
-export default (game, collisions, plateSprite, targetSprite, doorSprite, onOpen, onClose) => {
+export default (game, collisions, target, sensorPos, doorPos) => {
+  const sensorSpr = game.add.sprite(sensorPos.x, sensorPos.y, 'sensor');
+  const doorAnim = new DoorAnimation(game, doorPos.x, doorPos.y);
+
   let wasHit = false;
-  Sensor(game, collisions, plateSprite, targetSprite, wasHit, (isHit) => {
+  Sensor(game, collisions, sensorSpr, target, wasHit, (isHit) => {
     if (isHit !== wasHit) {
       if (isHit) {
-        onOpen();
+        doorAnim.open();
       } else {
-        onClose();
+        doorAnim.close();
       }
       wasHit = isHit;
     }
