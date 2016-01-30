@@ -13,6 +13,7 @@ export default class Player extends Phaser.Sprite {
 
     this.animations.add('turn', [4], 20, true);
     this.animations.add('attack', [5, 6, 7, 8], 10, false);
+    this.animations.add('seppucku', [0], 10, true);
     this.animations.add('right', [5, 6, 7, 8], 10, true);
     this.animations.add('left', [0, 1, 2, 3], 10, true);
 
@@ -21,6 +22,7 @@ export default class Player extends Phaser.Sprite {
     this.cursors = game.input.keyboard.createCursorKeys();
     this.attackButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    this.seppuckuButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
 
     // console.log('(Phaser.Keyboard ', Object.keys(Phaser.Keyboard));
 
@@ -33,14 +35,23 @@ export default class Player extends Phaser.Sprite {
     const cursors = this.cursors;
     const jumpButton = this.jumpButton;
 
-    if(this.attackButton.isDown){
-      console.log('attack!!')
+    if(this.seppuckuButton.isDown){
+      console.log('seppucku!!')
       this.body.velocity.x = 0
-      this.body.velocity.xy = 0
-      this.animations.play('attack');
+      this.animations.play('seppucku');
+
+    }
+    if(this.animations.currentAnim.name === 'seppucku'){
+      return;
     }
 
 
+    if(this.attackButton.isDown){
+      console.log('attack!!')
+      this.body.velocity.x = 0
+      this.body.velocity.y = 0
+      this.animations.play('attack');
+    }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
       return;
     }
