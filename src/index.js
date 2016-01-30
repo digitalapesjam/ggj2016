@@ -1,5 +1,5 @@
 import * as states from './constants/states';
-import {GameState,StartMenu,EnemyTestLevel,PlayerExampleLevel} from './states';
+import {GameState, StartMenu, EnemyTestLevel, PlayerExampleLevel, LevelBlockState} from './states';
 
 class Game extends Phaser.Game {
 
