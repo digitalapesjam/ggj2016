@@ -1,6 +1,6 @@
 export default class Player extends Phaser.Sprite {
-  constructor(game,x,y,resource){
-    super(game,x,y,resource);
+  constructor(game,x,y){
+    super(game,x,y,'dude');
 
     this.game = game;
     game.add.existing(this);

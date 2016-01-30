@@ -1,4 +1,5 @@
 import Player from 'objects/Player';
+import Zombie from 'objects/Zombie';
 
 class GameState extends Phaser.State {
 
@@ -10,6 +11,7 @@ class GameState extends Phaser.State {
     this.game.load.image('starSmall', 'assets/star.png');
     this.game.load.image('starBig', 'assets/star2.png');
     this.game.load.image('background', 'assets/background2.png');
+    this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 18);
   }
 
 	create() {
@@ -31,14 +33,19 @@ class GameState extends Phaser.State {
 
     this.game.physics.arcade.gravity.y = 250;
 
-    this.player = new Player(this.game,32,32,'dude');
+    this.gameObjects = [];
+    this.gameObjects['player'] = new Player(this.game,32,32);
+    this.gameObjects['zombie'] = new Zombie(this.game,100,40);
+
     this.game.camera.follow(this.player);
+
 	}
 
   update(){
-    this.game.physics.arcade.collide(this.player, this.layer);
-    this.player.update();
-
+    Object.keys(this.gameObjects).forEach((key)=>{
+      this.game.physics.arcade.collide(this.gameObjects[key], this.layer);
+      this.gameObjects[key].update();
+    });
   }
 
 }
