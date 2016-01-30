@@ -36,15 +36,13 @@ class GameState extends Phaser.State {
     this.gameObjects = [];
     this.gameObjects['player'] = new Player(this.game,32,32);
     this.gameObjects['zombie'] = new Zombie(this.game,100,40);
-
-    this.game.camera.follow(this.player);
-
+    this.game.camera.follow(this.gameObjects['player']);
 	}
 
   update(){
     Object.keys(this.gameObjects).forEach((key)=>{
       this.game.physics.arcade.collide(this.gameObjects[key], this.layer);
-      this.gameObjects[key].update();
+      this.gameObjects[key].update(this);
     });
   }
 
