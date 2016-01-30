@@ -6,7 +6,7 @@ import System from '../util/System';
 class TestLevel extends Phaser.State {
 
   preload(){
-    this.load.spritesheet(PlayerAnimation.label, PlayerAnimation.path, 37, 45, 18);
+    this.load.spritesheet(PlayerAnimation.label, PlayerAnimation.path, 175.83, 174.33, 36);
   }
 
 	create() {

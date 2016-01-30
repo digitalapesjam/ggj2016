@@ -2,8 +2,8 @@ class MummyAnimation {
 
     constructor(game,x,y,scale){
       this.scale = scale;
-      this.sprite = game.add.sprite(x, y, MummyAnimation.label);
-      this.sprite.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+      this.sprite = game.add.sprite(x, y, MummyAnimation.label,2);
+      this.sprite.animations.add('walk', [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
       this.sprite.scale.set(scale);
       this.sprite.smoothed = false;
       this.sprite.anchor.setTo(.5, 1);
