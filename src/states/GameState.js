@@ -31,13 +31,19 @@ class GameState extends Phaser.State {
 
     this.game.physics.arcade.gravity.y = 250;
 
-    this.player = new Player(this.game,32,32,'dude');
+    this.player = new Player(this.game,32,32,'dude', this.layer);
+
     this.game.camera.follow(this.player);
 	}
 
   update(){
-    this.game.physics.arcade.collide(this.player, this.layer);
+    const game = this.game;
+    const that = this;
+    game.physics.arcade.collide(this.player, this.layer);
     this.player.update();
+    this.player.corpses.forEach((corpse) =>{
+      game.physics.arcade.collide(corpse, that.layer);
+    })
 
   }
 
