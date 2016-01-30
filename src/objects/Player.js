@@ -45,8 +45,13 @@ export default class Player extends Phaser.Sprite {
       return ;
     }
 
-    if(this.seppuckuButton.isDown){
+    if(this.seppuckuButton.isDown && !!!this.justSeppukued ){
       console.log('seppucku!!')
+      this.justSeppukued = true;
+      let that = this;
+      setTimeout(() => {
+        that.justSeppukued = false;
+      }, 1000);
       this.body.velocity.x = 0
       console.log('this.body ',this.body);
       this.animations.play('seppucku');
