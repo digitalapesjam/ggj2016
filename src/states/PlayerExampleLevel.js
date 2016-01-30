@@ -1,12 +1,12 @@
 import Player from 'objects/Player';
 import Walker from 'objects/behaviours/Walker';
-import MummyAnimation from 'objects/animations/MummyAnimation';
+import PlayerAnimation from 'objects/animations/PlayerAnimation';
 import System from '../util/System';
 
 class TestLevel extends Phaser.State {
 
   preload(){
-    this.load.spritesheet(MummyAnimation.label, MummyAnimation.path, 37, 45, 18);
+    this.load.spritesheet(PlayerAnimation.label, PlayerAnimation.path, 37, 45, 18);
   }
 
 	create() {
