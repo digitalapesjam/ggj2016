@@ -10,6 +10,7 @@ class MummyAnimation {
       this.sprite.smoothed = false;
       this.sprite.anchor.setTo(.5, 1);
       this.currentspeed = 0;
+      game.physics.arcade.enable(this.sprite);
     }
 
     stop(){
@@ -23,7 +24,7 @@ class MummyAnimation {
           this.sprite.scale.x = -this.scale;
 
         if (speed != this.currentspeed || this.sprite.animations.currentAnim.name != 'walk'){
-          this.sprite.animations.play('walk', Math.abs(speed)*30, true);
+          this.sprite.animations.play('walk', Math.abs(speed), true);
         }
 
         this.currentspeed = speed;

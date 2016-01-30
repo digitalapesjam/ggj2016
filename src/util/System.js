@@ -26,8 +26,7 @@ export default class System {
     }
     this.entities[id] = entity;
 
-    if (!!entity.animation){
-      this.game.physics.arcade.enable(entity.animation.sprite);
+    if (!!entity.animation.sprite.body){
       this.colliders.push(entity.animation.sprite);
       this.collidersEntity[entity.animation.sprite] = entity;
     }

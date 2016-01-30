@@ -20,8 +20,7 @@ export default class Character {
 
       update(game,system) {
           if (!!this.animation){
-            //console.log(this.name);
-            game.physics.arcade.overlap(this.animation.sprite,system.colliders,(spriteA,spriteB)=>{
+            game.physics.arcade.collide(this.animation.sprite,system.colliders,(spriteA,spriteB)=>{
                   if (spriteB != spriteA && !!this.behaviour)
                       this.behaviour.trigger(this,system.getCollidersEntity(spriteB));
                   return true;
@@ -35,15 +34,23 @@ export default class Character {
       stop() {
         if (!!this.animation){
             this.animation.stop();
+            if (!!this.animation.sprite.body)
+              this.animation.sprite.body.velocity.x = 0;
         }
       }
 
       walk(speed){
         if (this.isAlive() && !this.isAttacking) {
-          this.x += speed*this.agility;
           if (!!this.animation) {
-            this.animation.sprite.x=this.x;
-            this.animation.walk(speed*this.agility);
+            if (!!this.animation.sprite.body){
+              this.animation.sprite.body.velocity.x = 30*speed*this.agility;
+              this.x = this.animation.sprite.x;
+              this.animation.walk(this.animation.sprite.body.velocity.x);
+            } else {
+              this.x += speed*this.agility;
+              this.animation.sprite.x = this.x;
+              this.animation.walk(speed*this.agility*30);
+            }
           }
         }
       }
