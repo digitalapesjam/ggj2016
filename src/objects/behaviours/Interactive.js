@@ -15,4 +15,8 @@ export default class Interactive {
       entity.walk(this.walkdirection);
     }
   }
+
+  trigger(character,other){
+
+  }
 }
