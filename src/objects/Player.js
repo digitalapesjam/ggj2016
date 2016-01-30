@@ -45,7 +45,9 @@ export default class Player extends Phaser.Sprite {
       this.animations.play('seppucku');
 
       // super(game,x,y,resource);
-      this.corpses.push(new PlayerCorpse(this.game,32,32,'dude'));
+      // this.corpses.push(new PlayerCorpse(this.game,32,32,'dude'));
+      const pos = this.body.position
+      this.corpses.push(new PlayerCorpse(this.game,pos.x,pos.y-15,'dude'));
 
 
     }
