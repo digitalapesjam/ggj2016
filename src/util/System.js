@@ -1,39 +1,33 @@
 export default class System {
   constructor() {
-    this.layers = [];
+    this.entities = {};
   }
 
   update(game) {
-    let that = this;
-    this.layers.forEach(layer => {
-      if (!!layer) {
-        for (var k in layer) {
-          if (layer.hasOwnProperty(k)) {
-            layer[k].update(game, that);
-          }
-        }
+    const that = this;
+    const ents = this.entities;
+    for (var k in ents) {
+      if (ents.hasOwnProperty(k)) {
+        ents[k].update(game, that);
+      }
+    }
         // Object.values(layer).forEach(entity => {
         //   entity.update(game);
         // })
-      }
-    })
   }
 
-  register(layer, id, entity) {
-    if (!!!this.layers[layer]) {
-      this.layers[layer] = {}
-    }
+  register(id, entity) {
     if (entity.create) {
       entity.crate();
     }
-    this.layers[layer][id] = entity;
+    this.entities[id] = entity;
   }
 
-  remove(layer, id) {
-    delete(this.layers[layer][id]);
+  remove(id) {
+    delete(this.entities[id]);
   }
 
-  get(layer, id) {
-    return this.layers[layer][id];
+  get(id) {
+    return this.entities[id];
   }
 }

@@ -16,10 +16,10 @@ export default class CollisionChecker {
     }
   }
 
-  checkCollisions() {
+  checkCollisions(system) {
     let game = this.game;
     this.colliders.forEach(cs => {
-      cs.checkCollision(game);
+      cs.checkCollision(game, system);
     });
   }
 }
