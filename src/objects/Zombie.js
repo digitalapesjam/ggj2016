@@ -35,12 +35,10 @@ export default class Zombie extends Phaser.Sprite {
           this.animations.play('attack');
           break;
         case 'roaming':
-          if (Math.abs(this.x - this.startingPosition) > this.range/2 && !this.justTurned){
-                this.justTurned = true;
-                this.direction *= -1;
-                let that =this;
-                setTimeout(function () {that.justTurned = false; }, 100);
-          }
+          if (Math.abs(this.x - this.startingPosition) > this.range/2 && //out of the range
+            this.direction * (this.x - this.startingPosition) > 0 ) //going in the wrong direction
+                this.direction *= -1; //turn
+
           this.scale.x = this.direction;
           this.body.velocity.x = this.direction*10*this.agility;
           this.animations.play('walk');
