@@ -34,7 +34,7 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "sensors":"[[8,14], [12, 14]]"
+     "sensors":"[[8,14], [12, 14]], [[18,22], [21,22]]"
     },
  "renderorder":"right-down",
  "tileheight":16,
