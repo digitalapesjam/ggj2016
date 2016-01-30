@@ -6,6 +6,8 @@ export default class Character {
         this.life = 1;
         this.armor = 1;
         this.agility = 1;
+        this.attackSpeed = 1;
+        this.isAttacking = false;
       }
 
       isAlive(){
@@ -23,7 +25,7 @@ export default class Character {
       }
 
       walk(speed){
-        if (this.isAlive()) {
+        if (this.isAlive() && !this.isAttacking) {
           this.x += speed*this.agility;
           if (!!this.animation) {
             this.animation.walk(speed*this.agility);
@@ -33,8 +35,14 @@ export default class Character {
       }
 
       attack(){
-        if (!!this.animation && this.isAlive())
+        if (!!this.animation && this.isAlive() && !this.isAttacking){
           this.animation.attack();
+          this.isAttacking = true;
+          const that=this;
+          setTimeout(function () {
+            that.isAttacking = false;
+          }, 1000/this.attackSpeed);
+        }
       }
 
       damage(amount){

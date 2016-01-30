@@ -6,8 +6,8 @@ class Mummy extends Character {
 
     constructor(game,x,y){
       super(game,x,y);
-      this.animation = new MummyAnimation(game,x,y,4);
-      this.behaviour = new Walker(x,100);
+      this.animation = new MummyAnimation(game,x,y,1);
+      this.behaviour = new Walker(x,400);
       this.agility = .5;
     }
 
