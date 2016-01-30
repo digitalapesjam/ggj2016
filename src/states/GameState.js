@@ -1,5 +1,6 @@
 import Player from 'objects/Player';
 import Zombie from 'objects/Zombie';
+import Stalker from 'objects/Stalker';
 
 class GameState extends Phaser.State {
 
@@ -15,6 +16,7 @@ class GameState extends Phaser.State {
     this.game.load.image('starBig', 'assets/star2.png');
     this.game.load.image('background', 'assets/background2.png');
     this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 18);
+    this.game.load.spritesheet('monster', 'assets/monster39x40.png', 39, 40, 16);
   }
 
 	create() {
@@ -44,7 +46,8 @@ class GameState extends Phaser.State {
 
     this.gameObjects = [];
     this.gameObjects['player'] = new Player(this.game,32,32);
-    this.gameObjects['zombie'] = new Zombie(this.game,100,40);
+    this.gameObjects['stalker'] = new Stalker(this.game,300,40);
+    this.gameObjects['mummy'] = new Zombie(this.game,100,40);
     this.game.camera.follow(this.gameObjects['player']);
 
     const sensorsSpec = JSON.parse(`[${this.map.properties.sensors}]`);

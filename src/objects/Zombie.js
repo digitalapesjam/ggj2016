@@ -15,7 +15,8 @@ export default class Zombie extends Phaser.Sprite {
     this.agility = 2;
     this.state = 'roaming';
 
-    this.animations.add('attack', [0, 1, 2, 12],10,false);
+
+    this.animations.add('attack',  [4, 5, 6 ,7, 6, 5],20,false);
     this.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],this.agility*10,true);
   }
 
