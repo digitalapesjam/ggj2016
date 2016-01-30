@@ -6,7 +6,7 @@ export default (game, collisions, target, sensorPos, doorPos) => {
   const doorAnim = new DoorAnimation(game, doorPos.x, doorPos.y);
 
   let wasHit = false;
-  Sensor(game, collisions, sensorSpr, target, wasHit, (isHit) => {
+  const collision = Sensor(game, collisions, sensorSpr, target, wasHit, (isHit) => {
     if (isHit !== wasHit) {
       if (isHit) {
         doorAnim.open();
@@ -16,4 +16,13 @@ export default (game, collisions, target, sensorPos, doorPos) => {
       wasHit = isHit;
     }
   });
+
+  let removed = false;
+  return () => {
+    if (!removed) {
+        collisions.removeCollision(collision);
+        doorAnim.open();
+        removed = true;
+    }
+  }
 }
