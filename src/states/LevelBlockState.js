@@ -26,7 +26,7 @@ class GameState extends Phaser.State {
 
     const doors = [
       {
-        sensor: {x: 100, y: wHgt - 50},
+        sensor: {x: 100, y: wHgt},
         door: {x: 400, y: wHgt},
       },
     ];
