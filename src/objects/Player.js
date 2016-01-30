@@ -17,8 +17,9 @@ export default class Player extends Phaser.Sprite {
 
 
     this.animations.add('turn', [4], 20, true);
-    this.animations.add('attack', [5, 6, 7, 8], 10, false);
-    this.animations.add('seppucku', [0], 20, false);
+    this.animations.add('attack_left', [2,1,0], 10, false);
+    this.animations.add('attack_right', [17,18,19], 10, false);
+    this.animations.add('seppucku', [18, 18, 35], 20, false);
     this.animations.add('right', [10, 11,12,13,14,15,16], 10, true);
     this.animations.add('left', [3,4,5,6,7,8,9], 10, true);
     this.animations.add('stop_left', [3], 5, true);
@@ -34,6 +35,7 @@ export default class Player extends Phaser.Sprite {
     // console.log('(Phaser.Keyboard ', Object.keys(Phaser.Keyboard));
 
     this.facing = 'left';
+    this.direction = 'left';
     this.jumpTimer = 0;
     this.corpses = [];
   }
@@ -69,10 +71,11 @@ export default class Player extends Phaser.Sprite {
 
 
     if(this.attackButton.isDown){
-      console.log('attack!!')
       this.body.velocity.x = 0
       this.body.velocity.y = 0
-      this.animations.play('attack');
+
+      let attack_anim = 'attack_'+this.direction;
+      this.animations.play(attack_anim);
     }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
       return;
@@ -81,6 +84,7 @@ export default class Player extends Phaser.Sprite {
 
     if (cursors.left.isDown){
       this.body.velocity.x = -150;
+      this.direction = 'left';
 
       if (this.facing != 'left')
       {
@@ -88,6 +92,7 @@ export default class Player extends Phaser.Sprite {
         this.facing = 'left';
       }
     }else if (cursors.right.isDown){
+      this.direction = 'right';
       this.body.velocity.x = 150;
 
       if (this.facing != 'right')
