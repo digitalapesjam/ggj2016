@@ -99,6 +99,11 @@ class GameState extends Phaser.State {
       Object.keys(that.gameObjects).forEach((key) => {
           game.physics.arcade.collide(corpse, that.gameObjects[key]);
       });
+      that.gameObjects.player.corpses.forEach(otherCorpse => {
+        if (corpse !== otherCorpse) {
+          game.physics.arcade.collide(corpse, otherCorpse);
+        }
+      })
       sensors.forEach(sensor => {
         if (!sensor.hit) {
           const hit = corpse.overlap(sensor.sensorSprite);
