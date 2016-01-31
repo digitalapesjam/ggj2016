@@ -14,12 +14,12 @@ export default class Zombie extends Phaser.Sprite {
     this.startingPosition = x;
     this.range = 80;
     this.justTurned = false;
-    this.anchor.setTo(.5, 0);
+    this.anchor.setTo(.5, 0.5);
     this.agility = 1;
     this.state = 'roaming';
 
-    this.scale.y = 0.35;
-    this.scale.x = 0.35;
+    this.scale.y = 0.5;
+    this.scale.x = 0.5;
 
     this.animations.add('die', [114,115,116,117,118,119,120,121],10,false);
     this.animations.add('attack', [44,45,46,47,48,46,45],this.agility*10,false);
