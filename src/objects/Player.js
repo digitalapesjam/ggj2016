@@ -4,7 +4,7 @@ export default class Player extends Phaser.Sprite {
   constructor(gameState,game,x,y){
     super(game,x,y,'dude');
     this.name = 'Player';
-    this.scale = {x: 0.8, y: 0.8};
+    this.scale = {x: 1.2, y: 1.2};
     this.gameState = gameState;
 
     this.game = game;
