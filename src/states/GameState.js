@@ -94,10 +94,10 @@ class GameState extends Phaser.State {
             console.log('creating', key);
             switch (tile.properties.type) {
               case 'mummy':
-                go[key] = new Zombie(game, colIdx * tileW, rowIdx * tileH);
+                go[key] = new Zombie(game, colIdx * tileW, (rowIdx - 1) * tileH);
                 break;
               case 'stalker':
-                go[key] = new Stalker(game, colIdx * tileW, rowIdx * tileH);
+                go[key] = new Stalker(game, colIdx * tileW, (rowIdx - 1) * tileH);
                 break;
               default:
                 break;
