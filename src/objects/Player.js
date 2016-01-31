@@ -66,7 +66,7 @@ export default class Player extends Phaser.Sprite {
 
     if(this.attackButton.isDown){
       this.body.velocity.x = 0
-      this.body.velocity.y = 0
+      // this.body.velocity.y = 0
       this.animations.play('attack');
     }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
