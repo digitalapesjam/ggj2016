@@ -54,6 +54,9 @@ export default class Zombie extends Phaser.Sprite {
       switch (this.state) {
           case 'attacking':
             if (!this.justAttacked) {
+              this.direction = (this.gameState.gameObjects.player.x - this.x)/
+                              Math.abs(this.gameState.gameObjects.player.x - this.x)
+              this.scale.x = this.direction*Math.abs(this.scale.x);
               this.justAttacked = true;
               this.body.velocity.x = 0;
               const that = this;
