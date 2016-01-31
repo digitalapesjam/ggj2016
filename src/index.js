@@ -1,6 +1,7 @@
 import GameState from 'states/GameState';
 import GameOverState from 'states/GameOver';
 
+
 class Game extends Phaser.Game {
 
 	constructor() {

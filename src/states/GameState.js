@@ -5,10 +5,11 @@ import Stalker from 'objects/Stalker';
 class GameState extends Phaser.State {
 
   preload(){
-    this.game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('thelevel', 'assets/thelevel.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles-1', 'assets/tiles-1.png');
-
     this.game.load.image('min', 'assets/min.png');
+    this.game.load.image('mininicular', 'assets/mininicular.png');
+
     this.game.load.image('sensor', 'assets/sensor.png');
     this.game.load.spritesheet('door', 'assets/door.png', 16, 64);
     this.game.load.spritesheet('dude', 'assets/samurai.png', 42, 70);
@@ -32,15 +33,16 @@ class GameState extends Phaser.State {
     let ost = this.game.add.audio('level_ost');
     ost.play();
     ost.volume = 0.3;
-    this.game.stage.backgroundColor = "#4488AA";
+    this.game.stage.backgroundColor = "#EFEFEF";
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     // this.game.stage.backgroundColor = '#000000';
     // this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
     // this.background.fixedToCamera = true;
 
-    this.map = this.game.add.tilemap('level1');
-    this.map.addTilesetImage('tiles-1');
-    this.map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
+    this.map = this.game.add.tilemap('thelevel');
+    this.map.addTilesetImage('mininicular');
+    this.map.setCollisionByExclusion([]);
+    // this.map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
 
     this.layer = this.map.createLayer('Tile Layer 1');
     // this.layer2 = this.map.createLayer('Tile Layer 2');
@@ -103,7 +105,7 @@ class GameState extends Phaser.State {
     const tileW = this.map.tileWidth;
     const tileH = this.map.tileHeight;
     const layer = map.createLayer('Triggers');
-    // layer.renderable = false;
+    layer.renderable = false;
 
     const triggers = {
       'exit': (sprite, tile) => {

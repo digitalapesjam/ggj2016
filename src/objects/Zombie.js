@@ -1,6 +1,7 @@
 export default class Zombie extends Phaser.Sprite {
   constructor(gamestate, game,x,y){
     super(game,x,y,'monster');
+    this.scale = {x: 2, y: 2};
     this.gameState = gamestate;
     this.game = game;
     game.add.existing(this);
