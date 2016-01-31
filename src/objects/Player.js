@@ -4,7 +4,7 @@ export default class Player extends Phaser.Sprite {
   constructor(gameState,game,x,y){
     super(game,x,y,'dude');
     this.name = 'Player';
-    this.scale = {x: 1.2, y: 1.2};
+    this.scale = {x: 0.8, y: 0.8};
     this.gameState = gameState;
 
     this.game = game;
@@ -110,8 +110,8 @@ export default class Player extends Phaser.Sprite {
       this.isJumping = false;
     if (jumpButton.isDown && canJump)
     {
-      this.body.velocity.y = -150;
-      this.jumpTimer = this.game.time.now + 750;
+      this.body.velocity.y = -180;
+      this.jumpTimer = this.game.time.now + 1750;
       this.isJumping = true;
       // this.animations.stop();
       this.animations.play('jump');
