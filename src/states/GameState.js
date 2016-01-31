@@ -8,7 +8,7 @@ class GameState extends Phaser.State {
     this.game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles-1', 'assets/tiles-1.png');
 
-    // this.game.load.image('min', 'assets/min.png');
+    this.game.load.image('min', 'assets/min.png');
     this.game.load.image('sensor', 'assets/sensor.png');
     this.game.load.spritesheet('door', 'assets/door.png', 16, 64);
     this.game.load.spritesheet('dude', 'assets/samurai.png', 42, 70);
@@ -28,7 +28,6 @@ class GameState extends Phaser.State {
 
     this.map = this.game.add.tilemap('level1');
     this.map.addTilesetImage('tiles-1');
-    // this.map.addTilesetImage('min');
     this.map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
 
     this.layer = this.map.createLayer('Tile Layer 1');
@@ -47,8 +46,8 @@ class GameState extends Phaser.State {
 
     this.gameObjects = [];
     this.gameObjects['player'] = new Player(this.game,32,32);
-    this.gameObjects['stalker'] = new Stalker(this.game,300,40);
-    this.gameObjects['mummy'] = new Zombie(this.game,100,40);
+    // this.gameObjects['stalker'] = new Stalker(this.game,300,40);
+    // this.gameObjects['mummy'] = new Zombie(this.game,100,40);
     this.game.camera.follow(this.gameObjects['player']);
 
     const sensorsSpec = JSON.parse(`[${this.map.properties.sensors}]`);
@@ -76,7 +75,38 @@ class GameState extends Phaser.State {
       sensors.push({sensorSprite, doorSprite, hit: false});
     });
 
+    this.loadEnemies(game, this.map);
 	}
+
+  loadEnemies(game, map) {
+    const tileW = this.map.tileWidth;
+    const tileH = this.map.tileHeight;
+    const {tileproperties} = this.map.addTilesetImage('min');
+    const layer = map.createLayer('Enemy');
+    layer.renderable = false;
+
+    const go = this.gameObjects;
+    layer.layer.data.forEach((row, rowIdx) => {
+      row.forEach((tile, colIdx) => {
+        if (tile.index > -1) {
+          if (tile.properties.type) {
+            const key = `${tile.properties.type}_${rowIdx}:${colIdx}`;
+            console.log('creating', key);
+            switch (tile.properties.type) {
+              case 'mummy':
+                go[key] = new Zombie(game, colIdx * tileW, rowIdx * tileH);
+                break;
+              case 'stalker':
+                go[key] = new Stalker(game, colIdx * tileW, rowIdx * tileH);
+                break;
+              default:
+                break;
+            }
+          }
+        }
+      });
+    });
+  }
 
   update(){
     const game = this.game;
