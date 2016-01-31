@@ -1,6 +1,7 @@
 import Player from 'objects/Player';
 import Zombie from 'objects/Zombie';
 import Stalker from 'objects/Stalker';
+import HealthBar from 'objects/HealthBar';
 
 class GameState extends Phaser.State {
 
@@ -84,6 +85,10 @@ class GameState extends Phaser.State {
     const {tileproperties} = this.map.addTilesetImage('min');
     this.loadEnemies(tileproperties, game, this.map);
     this.loadTriggers(tileproperties, game, this.map);
+
+
+    this.healthBar = new HealthBar(this.game, {x: 220});
+    this.healthBar.setFixedToCamera(true);
 	}
 
   gameOver() {
@@ -155,6 +160,8 @@ class GameState extends Phaser.State {
   update(){
     const game = this.game;
     const that = this;
+
+    this.healthBar.setPercent(that.gameObjects.player.health);
 
     this.sensors.forEach(s => {
       const hit = that.gameObjects.player.overlap(s.sensorSprite);
