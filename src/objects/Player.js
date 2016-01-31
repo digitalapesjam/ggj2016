@@ -17,13 +17,15 @@ export default class Player extends Phaser.Sprite {
 
 
     this.animations.add('turn', [4], 20, true);
-    this.animations.add('attack_left', [2,1,0], 10, false);
-    this.animations.add('attack_right', [17,18,19], 10, false);
+    this.animations.add('attack', [2,1,0], 10, false);
+    // this.animations.add('attack_right', [17,18,19], 10, false);
     this.animations.add('seppucku', [18, 18, 35], 20, false);
-    this.animations.add('right', [10, 11,12,13,14,15,16], 10, true);
-    this.animations.add('left', [3,4,5,6,7,8,9], 10, true);
+    // this.animations.add('right', [10, 11,12,13,14,15,16], 10, true);
+    // this.animations.add('left', [3,4,5,6,7,8,9], 10, true);
+    this.animations.add('walk', [3,4,5,6,7,8,9], 10, true);
     this.animations.add('stop_left', [3], 5, true);
     this.animations.add('stop_right', [16], 5, true);
+    this.animations.add('jump', [20], 5, true);
 
 
 
@@ -41,6 +43,8 @@ export default class Player extends Phaser.Sprite {
   }
 
   update(){
+    console.log('this.scale.x ', this.scale.x)
+
     this.body.velocity.x = 0;
     const cursors = this.cursors;
     const jumpButton = this.jumpButton;
@@ -73,33 +77,39 @@ export default class Player extends Phaser.Sprite {
       this.body.velocity.x = 0
       this.body.velocity.y = 0
 
-      let attack_anim = 'attack_'+this.direction;
-      this.animations.play(attack_anim);
+      this.animations.play('attack');
     }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
       return;
     }
-
-
-    if (cursors.left.isDown){
-      this.body.velocity.x = -150;
-      this.direction = 'left';
-
-      if (this.facing != 'left')
-      {
-        this.animations.play('left');
-        this.facing = 'left';
-      }
-    }else if (cursors.right.isDown){
-      this.direction = 'right';
-      this.body.velocity.x = 150;
-
-      if (this.facing != 'right')
-      {
-        this.animations.play('right');
-        this.facing = 'right';
-      }
+    if(cursors.left.isDown || cursors.right.isDown) {
+      var d = (cursors.right.isDown) ? 1 : -1;
+      this.direction = d;
+      this.scale.x = -d
+      this.body.velocity.x = d*150;
+      this.animations.play('walk');
     }
+
+    // if (cursors.left.isDown){
+    //   this.body.velocity.x = -150;
+    //   this.direction = 1;
+    //   this.scale.x = this.direction;
+    //
+    //   if (this.facing != 'left')
+    //   {
+    //     this.animations.play('walk');
+    //     this.facing = 'left';
+    //   }
+    // }else if (cursors.right.isDown){
+    //   this.direction = -1;
+    //   this.body.velocity.x = 150;
+    //   this.scale.x = this.direction;
+    //   if (this.facing != 'right')
+    //   {
+    //     this.animations.play('walk');
+    //     this.facing = 'right';
+    //   }
+    // }
     else
     {
       if (this.facing != 'idle')
@@ -126,6 +136,7 @@ export default class Player extends Phaser.Sprite {
     {
       this.body.velocity.y = -150;
       this.jumpTimer = this.game.time.now + 750;
+      // this.animations.play('jump');
     }
   }
 }
