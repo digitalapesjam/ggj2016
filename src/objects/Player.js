@@ -3,6 +3,7 @@ import PlayerCorpse from './PlayerCorpse';
 export default class Player extends Phaser.Sprite {
   constructor(game,x,y){
     super(game,x,y,'dude');
+    this.scale = {x: 0.8, y: 0.8};
 
     this.game = game;
     game.add.existing(this);
@@ -57,7 +58,7 @@ export default class Player extends Phaser.Sprite {
       this.body.velocity.x = 0
       this.animations.play('seppucku');
       const pos = this.body.position
-      this.corpses.push(new PlayerCorpse(this.game,pos.x,pos.y-15,'dude'));
+      this.corpses.push(new PlayerCorpse(this, this.game,pos.x,pos.y-15,'dude'));
       this.x = this.initialPosition.x;
       this.y = this.initialPosition.y;
     }
@@ -73,7 +74,7 @@ export default class Player extends Phaser.Sprite {
     if(cursors.left.isDown || cursors.right.isDown) {
       var d = (cursors.right.isDown) ? 1 : -1;
       this.direction = d;
-      this.scale.x = d
+      this.scale.x = d * (Math.abs(this.scale.x));
       this.body.velocity.x = d*150;
 
       if(!this.isJumping)
