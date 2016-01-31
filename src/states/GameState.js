@@ -17,7 +17,8 @@ class GameState extends Phaser.State {
     this.game.load.image('starBig', 'assets/star2.png');
     this.game.load.image('background', 'assets/background2.png');
     this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 25);
-    this.game.load.spritesheet('monster', 'assets/monster39x40.png', 39, 40, 20);
+    this.game.load.spritesheet('monster', 'assets/monster128x128.png', 128, 128, 122);
+    this.game.load.spritesheet('skull', 'assets/skull128x128.png', 128, 128, 122);
   }
 
 	create() {
