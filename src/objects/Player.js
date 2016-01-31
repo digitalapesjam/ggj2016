@@ -4,7 +4,7 @@ export default class Player extends Phaser.Sprite {
   constructor(gameState,game,x,y){
     super(game,x,y,'dude');
     this.name = 'Player';
-    this.scale = {x: 1.2, y: 1.2};
+    this.scale = {x: 0.6, y: 0.6};
     this.gameState = gameState;
 
     this.game = game;
@@ -16,13 +16,14 @@ export default class Player extends Phaser.Sprite {
     }
     this.body.bounce.y = 0.2;
     this.body.collideWorldBounds = true;
-    this.body.setSize(42, 50, 5, 16);
+    this.body.setSize(118.66*0.6+20,128*0.6, 5, 16);
 
-    this.animations.add('attack', [17, 18, 19], 10, false);
-    this.animations.add('seppucku', [18, 18, 35], 20, false);
-    this.animations.add('walk', [10,11,12,13,14,15,16], 10, true);
-    this.animations.add('stop', [16], 5, true);
-    this.animations.add('jump', [20], 20, true);
+
+    this.animations.add('seppucku', [6,0], 10, false);
+    this.animations.add('walk', [1,2], 10, true);
+    this.animations.add('stop', [1], 5, true);
+    this.animations.add('jump', [5], 20, true);
+    this.animations.add('attack', [6,7], 10, false);
 
 
 
@@ -39,8 +40,6 @@ export default class Player extends Phaser.Sprite {
     this.isJumping = false;
     this.animations.play('stop');
     this.health = 100;
-
-    this.attackSound = this.game.add.audio('sword');
   }
 
   setCurrentEnemy(sprite){
@@ -78,13 +77,12 @@ export default class Player extends Phaser.Sprite {
       this.body.velocity.x = 0
       // this.body.velocity.y = 0
       this.animations.play('attack');
-      this.attackSound.play();
       if (!!this.currentEnemy)
         this.currentEnemy.damage(50);
       const that = this;
       setTimeout(function () {
         that.justAttacked = false;
-      }, 300);
+      }, 200);
     }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
       return;
