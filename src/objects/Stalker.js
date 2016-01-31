@@ -61,7 +61,7 @@ export default class Stalker extends Phaser.Sprite {
 
         this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,player)=>{
           player.setCurrentEnemy(this);
-          if (Math.abs(this.gameState.gameObjects.player.y - this.y) < 20)//same vertical position
+          if (Math.abs(this.gameState.gameObjects.player.y - this.y) < 100)//same vertical position
             this.state = 'attacking';
         },null,this);
 
