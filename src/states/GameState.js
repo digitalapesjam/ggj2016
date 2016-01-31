@@ -21,10 +21,11 @@ class GameState extends Phaser.State {
   }
 
 	create() {
+    this.game.stage.backgroundColor = "#4488AA";
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.game.stage.backgroundColor = '#000000';
-    this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
-    this.background.fixedToCamera = true;
+    // this.game.stage.backgroundColor = '#000000';
+    // this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
+    // this.background.fixedToCamera = true;
 
     this.map = this.game.add.tilemap('level1');
     this.map.addTilesetImage('tiles-1');
@@ -49,6 +50,8 @@ class GameState extends Phaser.State {
     // this.gameObjects['stalker'] = new Stalker(this.game,300,40);
     // this.gameObjects['mummy'] = new Zombie(this.game,100,40);
     this.game.camera.follow(this.gameObjects['player']);
+
+    this.gameObjects['player'].events.onKilled.addOnce(this.gameOver, this);
 
     const sensorsSpec = JSON.parse(`[${this.map.properties.sensors}]`);
     const game = this.game;
@@ -75,14 +78,50 @@ class GameState extends Phaser.State {
       sensors.push({sensorSprite, doorSprite, hit: false});
     });
 
-    this.loadEnemies(game, this.map);
+    const {tileproperties} = this.map.addTilesetImage('min');
+    this.loadEnemies(tileproperties, game, this.map);
+    this.loadTriggers(tileproperties, game, this.map);
 	}
 
-  loadEnemies(game, map) {
+  gameOver() {
+    this.game.state.start('GameOver');
+  }
+
+  loadTriggers(tileproperties, game, map) {
     const game_state = this;
     const tileW = this.map.tileWidth;
     const tileH = this.map.tileHeight;
-    const {tileproperties} = this.map.addTilesetImage('min');
+    const layer = map.createLayer('Triggers');
+    // layer.renderable = false;
+
+    const triggers = {
+      'exit': (sprite, tile) => {
+        if (sprite.name === 'Player') {
+          // congrats!
+          console.log('exit door touched', {sprite, tile});
+          this.gameOver();
+        }
+      }
+    }
+
+    const go = this.gameObjects;
+    layer.layer.data.forEach((row, rowIdx) => {
+      row.forEach((tile, colIdx) => {
+        if (tile.index > -1 && tile.properties.type) {
+          const key = `${tile.properties.type}_${rowIdx}:${colIdx}`;
+          console.log('creating trigger', key);
+          map.setTileLocationCallback(colIdx, rowIdx, 1, 1,
+                                      triggers[tile.properties.type], game_state,
+                                      game_state.layer);
+        }
+      });
+    });
+  }
+
+  loadEnemies(tileproperties, game, map) {
+    const game_state = this;
+    const tileW = this.map.tileWidth;
+    const tileH = this.map.tileHeight;
     const layer = map.createLayer('Enemy');
     layer.renderable = false;
 
