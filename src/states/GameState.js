@@ -31,7 +31,7 @@ class GameState extends Phaser.State {
 
     this.map = this.game.add.tilemap('thelevel');
     this.map.addTilesetImage('mininicular');
-    this.map.setCollisionByExclusion([]);
+    this.map.setCollisionByExclusion([48, 59, 50, 51, 52, 53, 54, 55]);
     // this.map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
 
     this.layer = this.map.createLayer('Tile Layer 1');
@@ -42,7 +42,7 @@ class GameState extends Phaser.State {
     // }, null, this.layer2);
     //
     //Un-comment this on to see the collision tiles
-    //this.layer.debug = true;
+    // this.layer.debug = true;
 
     this.layer.resizeWorld();
 
@@ -66,10 +66,10 @@ class GameState extends Phaser.State {
     const tileH = this.map.tileHeight;
     sensorsSpec.forEach(([[stx, sty], [dtx, dty]]) => {
 
-      const sensorSprite = game.add.sprite(stx * tileW, sty * tileH, 'sensor');
+      const sensorSprite = game.add.sprite(stx * tileW, (1 + sty) * tileH, 'sensor');
       sensorSprite.anchor.y = 1;
 
-      const doorSprite = game.add.sprite(dtx * tileW, dty * tileH, 'door');
+      const doorSprite = game.add.sprite(dtx * tileW, (1 + dty) * tileH, 'door');
       doorSprite.anchor.y = 1;
       doorSprite.animations.add('open', [1]);
       doorSprite.animations.add('close', [0]);
