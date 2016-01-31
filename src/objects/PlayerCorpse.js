@@ -30,9 +30,9 @@ export default class PlayerCorpse extends Phaser.Sprite {
   }
 
   update(){
-    if (this.lifespan > 0) {
-      this.fade();
-    }
+    // if (this.lifespan > 0) {
+    //   this.fade();
+    // }
     this.body.velocity.x = 0;
   }
 }
