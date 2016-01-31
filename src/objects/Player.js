@@ -40,8 +40,6 @@ export default class Player extends Phaser.Sprite {
   update(){
     const almostGrounded = this.body.onFloor() || 0.2 > Math.abs(this.body.deltaY());
     let canJump = almostGrounded && this.game.time.now > this.jumpTimer
-    if(this.isJumping)
-      console.log('this.isJumping !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     this.body.velocity.x = 0;
     const cursors = this.cursors;
     const jumpButton = this.jumpButton;
@@ -81,10 +79,10 @@ export default class Player extends Phaser.Sprite {
       if(!this.isJumping)
         this.animations.play('walk');
     } else {
-      // if(!this.isJumping){
+      if(!this.isJumping){
         this.animations.stop();
-        // this.animations.play('stop');
-      // }
+        this.animations.play('stop');
+      }
     }
 
 
