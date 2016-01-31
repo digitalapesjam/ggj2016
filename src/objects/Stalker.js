@@ -42,15 +42,18 @@ export default class Stalker extends Phaser.Sprite {
       this.deathSound.play();
       setTimeout(function () {
         that.kill();
-      }, 300);
-    } else{
+      }, 1000);
+    } else {
       super.damage(dam);
       this.damageSound.play();
+      //const that = this;
+      //this.punchSound.onDecoded.add(function() {that.punchSound.play();});
     }
+
   }
 
   update(){
-    if (this.state !== 'dead'){
+    if (this.state != 'dead'){
         if (Math.abs(this.gameState.gameObjects.player.x - this.x) < this.range &&  Math.abs(this.gameState.gameObjects.player.y - this.y) < 100){ //in range and same vertical position
           this.direction = (this.gameState.gameObjects.player.x - this.x)/
                           Math.abs(this.gameState.gameObjects.player.x - this.x);
@@ -83,14 +86,15 @@ export default class Stalker extends Phaser.Sprite {
               setTimeout(function () {
                 that.animations.play('attack');
                 setTimeout(function () {
-                  that.attackSound.play();
+                  if (that.game.physics.arcade.distanceBetween(that,that.gameState.gameObjects.player)< 100){
+                    that.gameState.gameObjects.player.damage(20);
+                    that.attackSound.play();
+                  }
                 }, 200);
                 setTimeout(function () {
-                  if (that.game.physics.arcade.distanceBetween(that,that.gameState.gameObjects.player)< 100) 
-                    that.gameState.gameObjects.player.damage(30);
                   that.justAttacked = false;
                 }, 500);//cool down
-              }, 100);//reaction time
+              }, 300);//reaction time
             }
             break;
         }

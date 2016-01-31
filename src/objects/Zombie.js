@@ -36,6 +36,7 @@ export default class Zombie extends Phaser.Sprite {
     if (this.state !== 'dead' && this.health - dam <= 0){
       this.body.velocity.x = 0;
       this.animations.play('die');
+      console.log("I'm dying")
       this.state = 'dead';
       let that = this;
       this.deathSound.play();
@@ -75,15 +76,15 @@ export default class Zombie extends Phaser.Sprite {
               setTimeout(function () {
                 that.animations.play('attack');
                 setTimeout(function () {
-                  that.attackSound.play();
-                  if (that.game.physics.arcade.distanceBetween(that,that.gameState.gameObjects.player)< 100) //still close to the player?
+                  if (that.game.physics.arcade.distanceBetween(that,that.gameState.gameObjects.player)< 100){
+                    that.attackSound.play();
                     that.gameState.gameObjects.player.damage(10);
+                  }
                 }, 200);
                 setTimeout(function () {
-
                   that.justAttacked = false;
                 }, 1000); //cooldown
-              }, 200); //reaction time
+              }, 300); //reaction time
             }
             break;
           case 'roaming':
