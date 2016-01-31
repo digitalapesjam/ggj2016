@@ -3,7 +3,7 @@ import PlayerCorpse from './PlayerCorpse';
 export default class Player extends Phaser.Sprite {
   constructor(game,x,y){
     super(game,x,y,'dude');
-    this.scale = {x: 0.8, y: 0.8};
+    this.scale = {x: 0.6, y: 0.6};
 
     this.game = game;
     game.add.existing(this);
