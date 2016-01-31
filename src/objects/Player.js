@@ -1,9 +1,10 @@
 import PlayerCorpse from './PlayerCorpse';
 
 export default class Player extends Phaser.Sprite {
-  constructor(game,x,y){
+  constructor(gameState,game,x,y){
     super(game,x,y,'dude');
     this.scale = {x: 0.6, y: 0.6};
+    this.gameState = gameState;
 
     this.game = game;
     game.add.existing(this);
@@ -36,6 +37,11 @@ export default class Player extends Phaser.Sprite {
     this.corpses = [];
     this.isJumping = false;
     this.animations.play('stop');
+    this.health = 100;
+  }
+
+  setCurrentEnemy(sprite){
+    this.currentEnemy = sprite;
   }
 
   update(){
@@ -64,10 +70,17 @@ export default class Player extends Phaser.Sprite {
       this.y = this.initialPosition.y;
     }
 
-    if(this.attackButton.isDown){
+    if(this.attackButton.isDown && !!!this.justAttacked){
+      this.justAttacked = true;
       this.body.velocity.x = 0
       this.body.velocity.y = 0
       this.animations.play('attack');
+      if (!!this.currentEnemy)
+        this.currentEnemy.damage(50);
+      const that = this;
+      setTimeout(function () {
+        that.justAttacked = false;
+      }, 200);
     }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
       return;
@@ -101,5 +114,7 @@ export default class Player extends Phaser.Sprite {
       console.log('jump anim')
 
     }
+
+    this.currentEnemy = undefined;
   }
 }

@@ -21,13 +21,22 @@ export default class Stalker extends Phaser.Sprite {
     this.animations.add('idle', [4],this.agility,true);
     this.animations.add('walk', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],this.agility*10,true);
 
-    this.health = 100;
-    // this.events.onKilled.add(this.killed,this);
+    this.health = 50;
   }
 
-  // killed(){
-  //   this.destroy();
-  // }
+  damage(dam){
+
+    if (this.health - dam <= 0){
+      this.body.velocity.x = 0;
+      this.animations.play('die');
+      this.state = 'dead';
+      let that = this;
+      setTimeout(function () {
+        that.kill();
+      }, 300);
+    } else
+      super.damage(dam);
+  }
 
   update(){
     if (this.alive){
@@ -39,20 +48,11 @@ export default class Stalker extends Phaser.Sprite {
           this.state = 'idle';
         }
 
-        this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,spriteB)=>{
+        this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,player)=>{
+          player.setCurrentEnemy(this);
           if (Math.abs(this.gameState.gameObjects.player.y - this.y) < 20)//same vertical position
             this.state = 'attacking';
         },null,this);
-
-        if (this.health <= 1){
-          this.body.velocity.x = 0;
-          this.animations.play('die');
-          this.state = 'dead';
-          let that = this;
-          setTimeout(function () {
-            that.damage(1);
-          }, 300);
-        }
 
         switch (this.state) {
             case 'idle':
@@ -65,7 +65,15 @@ export default class Stalker extends Phaser.Sprite {
               this.animations.play('walk');
               break;
             case 'attacking':
-              this.animations.play('attack');
+              if (!this.justAttacked) {
+                this.justAttacked = true;
+                this.animations.play('attack');
+                this.gameState.gameObjects.player.damage(20);
+                const that = this;
+                setTimeout(function () {
+                  that.justAttacked = false;
+                }, 500);
+              }
               break;
         }
       }

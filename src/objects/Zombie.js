@@ -21,37 +21,45 @@ export default class Zombie extends Phaser.Sprite {
     this.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,16,17],this.agility*10,true);
 
     this.health = 100;
-    // this.events.onKilled.add(this.killed,this);
   }
 
-  // killed(){
-  //   this.destroy();
-  // }
+  damage(dam){
+    if (this.health - dam <= 0){
+      this.body.velocity.x = 0;
+      this.animations.play('die');
+      this.state = 'dead';
+      let that = this;
+      setTimeout(function () {
+        that.kill();
+      }, 300);
+    } else
+      super.damage(dam);
+  }
 
   update(){
     if (this.alive){
-      this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,spriteB)=>{
+      this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,player)=>{
         this.state = 'attacking';
+        player.setCurrentEnemy(this);
       },null,this);
 
       if (!this.animations.currentAnim.isPlaying && this.animations.currentAnim.name === 'attack'){
         this.state = 'roaming';
       }
 
-      if (this.health <= 1){
-        this.body.velocity.x = 0;
-        this.animations.play('die');
-        this.state = 'dead';
-        let that = this;
-        setTimeout(function () {
-          that.damage(1);
-        }, 300);
-      }
-
       switch (this.state) {
           case 'attacking':
-            this.body.velocity.x = 0;
-            this.animations.play('attack');
+            if (!this.justAttacked) {
+              console.log("attack");
+              this.justAttacked = true;
+              this.body.velocity.x = 0;
+              this.animations.play('attack');
+              this.gameState.gameObjects.player.damage(10);
+              const that = this;
+              setTimeout(function () {
+                that.justAttacked = false;
+              }, 500);
+            }
             break;
           case 'roaming':
             if (Math.abs(this.x - this.startingPosition) > this.range/2 && //out of the range

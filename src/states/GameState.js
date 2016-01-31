@@ -45,7 +45,7 @@ class GameState extends Phaser.State {
     this.game.physics.arcade.gravity.y = 250;
 
     this.gameObjects = [];
-    this.gameObjects['player'] = new Player(this.game,32,32);
+    this.gameObjects['player'] = new Player(this,this.game,32,32);
     // this.gameObjects['stalker'] = new Stalker(this.game,300,40);
     // this.gameObjects['mummy'] = new Zombie(this.game,100,40);
     this.game.camera.follow(this.gameObjects['player']);
@@ -103,7 +103,7 @@ class GameState extends Phaser.State {
               default:
                 break;
             }
-            go[key]._key = key;
+            go[key].name = key;
           }
         }
       });
