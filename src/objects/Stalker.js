@@ -86,7 +86,8 @@ export default class Stalker extends Phaser.Sprite {
                   that.attackSound.play();
                 }, 200);
                 setTimeout(function () {
-                  that.gameState.gameObjects.player.damage(30);
+                  if (that.game.physics.arcade.distanceBetween(that,that.gameState.gameObjects.player)< 100) 
+                    that.gameState.gameObjects.player.damage(30);
                   that.justAttacked = false;
                 }, 500);//cool down
               }, 100);//reaction time

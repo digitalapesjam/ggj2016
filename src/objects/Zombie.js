@@ -41,7 +41,7 @@ export default class Zombie extends Phaser.Sprite {
       this.deathSound.play();
       setTimeout(function () {
         that.kill();
-      }, 300);
+      }, 1000);
     } else {
       super.damage(dam);
       this.damageSound.play();
@@ -56,6 +56,7 @@ export default class Zombie extends Phaser.Sprite {
       this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,player)=>{
         this.state = 'attacking';
         player.setCurrentEnemy(this);
+        this.currentEnemy = player;
       },null,this);
 
       if (!this.animations.currentAnim.isPlaying && this.animations.currentAnim.name === 'attack'){
@@ -75,12 +76,14 @@ export default class Zombie extends Phaser.Sprite {
                 that.animations.play('attack');
                 setTimeout(function () {
                   that.attackSound.play();
+                  if (that.game.physics.arcade.distanceBetween(that,that.gameState.gameObjects.player)< 100) //still close to the player?
+                    that.gameState.gameObjects.player.damage(10);
                 }, 200);
                 setTimeout(function () {
-                  that.gameState.gameObjects.player.damage(10);
+
                   that.justAttacked = false;
                 }, 1000); //cooldown
-              }, 100); //reaction time
+              }, 200); //reaction time
             }
             break;
           case 'roaming':
@@ -93,6 +96,7 @@ export default class Zombie extends Phaser.Sprite {
             this.animations.play('walk');
             break;
       }
+      //this.currentEnemy = undefined;
 
     }
   }
