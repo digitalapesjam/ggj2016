@@ -16,8 +16,8 @@ class GameState extends Phaser.State {
     this.game.load.image('starSmall', 'assets/star.png');
     this.game.load.image('starBig', 'assets/star2.png');
     this.game.load.image('background', 'assets/background2.png');
-    this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 18);
-    this.game.load.spritesheet('monster', 'assets/monster39x40.png', 39, 40, 16);
+    this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 25);
+    this.game.load.spritesheet('monster', 'assets/monster39x40.png', 39, 40, 20);
   }
 
 	create() {
@@ -79,6 +79,7 @@ class GameState extends Phaser.State {
 	}
 
   loadEnemies(game, map) {
+    const game_state = this;
     const tileW = this.map.tileWidth;
     const tileH = this.map.tileHeight;
     const {tileproperties} = this.map.addTilesetImage('min');
@@ -94,14 +95,15 @@ class GameState extends Phaser.State {
             console.log('creating', key);
             switch (tile.properties.type) {
               case 'mummy':
-                go[key] = new Zombie(game, colIdx * tileW, (rowIdx - 1) * tileH);
+                go[key] = new Zombie(game_state, game, colIdx * tileW, (rowIdx - 1) * tileH);
                 break;
               case 'stalker':
-                go[key] = new Stalker(game, colIdx * tileW, (rowIdx - 1) * tileH);
+                go[key] = new Stalker(game_state, game, colIdx * tileW, (rowIdx - 1) * tileH);
                 break;
               default:
                 break;
             }
+            go[key]._key = key;
           }
         }
       });
@@ -155,13 +157,17 @@ class GameState extends Phaser.State {
     })
 
     Object.keys(this.gameObjects).forEach((key)=>{
+      //console.log('update', key, that.gameObjects[key]);
+      if (that.gameObjects[key].__cane) {
+        console.log(key, that.gameObjects[key]);
+      }
       game.physics.arcade.collide(that.gameObjects[key], that.layer);
       sensors.forEach(({doorSprite, hit}) => {
         if (!hit) {
           game.physics.arcade.collide(that.gameObjects[key], doorSprite);
         }
       });
-      that.gameObjects[key].update(that);
+      //that.gameObjects[key].update(that);
     });
   }
 

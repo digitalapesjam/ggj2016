@@ -41,6 +41,7 @@ export default class Player extends Phaser.Sprite {
   update(){
     const almostGrounded = this.body.onFloor() || 0.2 > Math.abs(this.body.deltaY());
     let canJump = almostGrounded && this.game.time.now > this.jumpTimer
+
     this.body.velocity.x = 0;
     const cursors = this.cursors;
     const jumpButton = this.jumpButton;
