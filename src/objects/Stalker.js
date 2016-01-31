@@ -1,6 +1,7 @@
 export default class Stalker extends Phaser.Sprite {
   constructor(stage, game,x,y){
     super(game,x,y,'skull');
+    this.scale = {x: 2, y: 2};
     this.gameState = stage;
     this.game = game;
     game.add.existing(this);
