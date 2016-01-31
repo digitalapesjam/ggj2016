@@ -19,14 +19,19 @@ class GameState extends Phaser.State {
     this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 25);
     this.game.load.spritesheet('monster', 'assets/monster128x128.png', 128, 128, 122);
     this.game.load.spritesheet('skull', 'assets/skull128x128.png', 128, 128, 122);
-    this.game.load.audio('punch', 'assets/ledge2.mp3');
+    this.game.load.audio('punch', 'assets/punch.wav');
     this.game.load.audio('damage_zombie', 'assets/painmonster.wav');
     this.game.load.audio('death_zombie', 'assets/deathmonster.wav');
     this.game.load.audio('damage_stalker', 'assets/painskull.wav');
     this.game.load.audio('death_stalker', 'assets/deathskull.wav');
+    this.game.load.audio('sword', 'assets/sword.wav');
+    this.game.load.audio('level_ost','assets/HeroImmortal.ogg');
   }
 
 	create() {
+    let ost = this.game.add.audio('level_ost');
+    ost.play();
+    ost.volume = 0.3;
     this.game.stage.backgroundColor = "#4488AA";
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     // this.game.stage.backgroundColor = '#000000';
