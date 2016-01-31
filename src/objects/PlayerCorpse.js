@@ -17,7 +17,7 @@ export default class PlayerCorpse extends Phaser.Sprite {
 
     this.facing = 'left';
     this.jumpTimer = 0;
-    this.frame = 23;
+    this.frame = 16;
   }
 
   update(){
