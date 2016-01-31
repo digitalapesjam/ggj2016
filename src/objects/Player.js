@@ -39,6 +39,8 @@ export default class Player extends Phaser.Sprite {
     this.isJumping = false;
     this.animations.play('stop');
     this.health = 100;
+
+    this.attackSound = this.game.add.audio('sword');
   }
 
   setCurrentEnemy(sprite){
@@ -76,12 +78,13 @@ export default class Player extends Phaser.Sprite {
       this.body.velocity.x = 0
       // this.body.velocity.y = 0
       this.animations.play('attack');
+      this.attackSound.play();
       if (!!this.currentEnemy)
         this.currentEnemy.damage(50);
       const that = this;
       setTimeout(function () {
         that.justAttacked = false;
-      }, 200);
+      }, 300);
     }
     if(this.animations.currentAnim.name === 'attack' && this.animations.currentAnim.isPlaying){
       return;

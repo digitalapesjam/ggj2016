@@ -26,23 +26,33 @@ export default class Zombie extends Phaser.Sprite {
     this.animations.add('walk', [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],this.agility*10,true);
 
     this.health = 100;
+
+    this.damageSound = this.game.add.audio('damage_zombie');
+    this.deathSound = this.game.add.audio('death_zombie');
+    this.attackSound = this.game.add.audio('punch');
   }
 
   damage(dam){
-    if (this.health - dam <= 0){
+    if (this.state !== 'dead' && this.health - dam <= 0){
       this.body.velocity.x = 0;
       this.animations.play('die');
       this.state = 'dead';
       let that = this;
+      this.deathSound.play();
       setTimeout(function () {
         that.kill();
       }, 300);
-    } else
+    } else {
       super.damage(dam);
+      this.damageSound.play();
+      //const that = this;
+      //this.punchSound.onDecoded.add(function() {that.punchSound.play();});
+    }
+
   }
 
   update(){
-    if (this.alive){
+    if (this.state != 'dead'){
       this.game.physics.arcade.collide(this,this.gameState.gameObjects.player,(spriteA,player)=>{
         this.state = 'attacking';
         player.setCurrentEnemy(this);
@@ -55,11 +65,17 @@ export default class Zombie extends Phaser.Sprite {
       switch (this.state) {
           case 'attacking':
             if (!this.justAttacked) {
+              this.direction = (this.gameState.gameObjects.player.x - this.x)/
+                              Math.abs(this.gameState.gameObjects.player.x - this.x)
+              this.scale.x = this.direction*Math.abs(this.scale.x);
               this.justAttacked = true;
               this.body.velocity.x = 0;
               const that = this;
               setTimeout(function () {
                 that.animations.play('attack');
+                setTimeout(function () {
+                  that.attackSound.play();
+                }, 200);
                 setTimeout(function () {
                   that.gameState.gameObjects.player.damage(10);
                   that.justAttacked = false;

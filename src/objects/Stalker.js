@@ -27,6 +27,10 @@ export default class Stalker extends Phaser.Sprite {
     this.animations.add('walk', [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],this.agility*2,true);
 
     this.health = 50;
+
+    this.damageSound = this.game.add.audio('damage_stalker');
+    this.deathSound = this.game.add.audio('death_stalker');
+    this.attackSound = this.game.add.audio('punch');
   }
 
   damage(dam){
@@ -35,12 +39,14 @@ export default class Stalker extends Phaser.Sprite {
       this.animations.play('die');
       this.state = 'dead';
       let that = this;
-
+      this.deathSound.play();
       setTimeout(function () {
         that.kill();
-      }, 1000);
-    } else
+      }, 300);
+    } else{
       super.damage(dam);
+      this.damageSound.play();
+    }
   }
 
   update(){
@@ -76,6 +82,9 @@ export default class Stalker extends Phaser.Sprite {
               const that = this;
               setTimeout(function () {
                 that.animations.play('attack');
+                setTimeout(function () {
+                  that.attackSound.play();
+                }, 200);
                 setTimeout(function () {
                   that.gameState.gameObjects.player.damage(30);
                   that.justAttacked = false;
