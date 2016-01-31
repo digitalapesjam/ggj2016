@@ -1,6 +1,7 @@
 import Player from 'objects/Player';
 import Zombie from 'objects/Zombie';
 import Stalker from 'objects/Stalker';
+import HealthBar from 'objects/HealthBar';
 
 class GameState extends Phaser.State {
 
@@ -20,9 +21,19 @@ class GameState extends Phaser.State {
     this.game.load.spritesheet('mummy', 'assets/mummy37x45.png', 37, 45, 25);
     this.game.load.spritesheet('monster', 'assets/monster128x128.png', 128, 128, 122);
     this.game.load.spritesheet('skull', 'assets/skull128x128.png', 128, 128, 122);
+    this.game.load.audio('punch', 'assets/punch.wav');
+    this.game.load.audio('damage_zombie', 'assets/painmonster.wav');
+    this.game.load.audio('death_zombie', 'assets/deathmonster.wav');
+    this.game.load.audio('damage_stalker', 'assets/painskull.wav');
+    this.game.load.audio('death_stalker', 'assets/deathskull.wav');
+    this.game.load.audio('sword', 'assets/sword.wav');
+    this.game.load.audio('level_ost','assets/HeroImmortal.ogg');
   }
 
 	create() {
+    let ost = this.game.add.audio('level_ost');
+    ost.play();
+    ost.volume = 0.3;
     this.game.stage.backgroundColor = "#EFEFEF";
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     // this.game.stage.backgroundColor = '#000000';
@@ -84,6 +95,10 @@ class GameState extends Phaser.State {
     const {tileproperties} = this.map.addTilesetImage('min');
     this.loadEnemies(tileproperties, game, this.map);
     this.loadTriggers(tileproperties, game, this.map);
+
+
+    this.healthBar = new HealthBar(this.game, {x: 220});
+    this.healthBar.setFixedToCamera(true);
 	}
 
   gameOver() {
@@ -155,6 +170,8 @@ class GameState extends Phaser.State {
   update(){
     const game = this.game;
     const that = this;
+
+    this.healthBar.setPercent(that.gameObjects.player.health);
 
     this.sensors.forEach(s => {
       const hit = that.gameObjects.player.overlap(s.sensorSprite);
