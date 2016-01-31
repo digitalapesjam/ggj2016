@@ -3,7 +3,9 @@
 export default class PlayerCorpse extends Phaser.Sprite {
   constructor(player, game,x,y,resource){
     super(game,x,y,resource);
-    this.scale = player.scale;
+    this.scale = {...player.scale}
+    // this.scale.x = player.scale.x;
+    // this.scale.y = player.scale.y;
     this.game = game;
     game.add.existing(this);
     game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -18,7 +20,7 @@ export default class PlayerCorpse extends Phaser.Sprite {
 
     this.facing = 'left';
     this.jumpTimer = 0;
-    this.frame = 23;
+    this.frame = 16;
     this.lifespan = 10000;
   }
 
