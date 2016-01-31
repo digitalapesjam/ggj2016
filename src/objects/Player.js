@@ -73,7 +73,7 @@ export default class Player extends Phaser.Sprite {
     if(this.attackButton.isDown && !!!this.justAttacked){
       this.justAttacked = true;
       this.body.velocity.x = 0
-      this.body.velocity.y = 0
+      // this.body.velocity.y = 0
       this.animations.play('attack');
       if (!!this.currentEnemy)
         this.currentEnemy.damage(50);
